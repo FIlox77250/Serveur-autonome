@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_TARGET="${attendre baptiste}"
+LOG_TARGET="${/var/log/maintenance/$NOM_FICHIER}"
 
 DISK_USAGE=$(df /home 2>/dev/null | grep / | awk '{print $5}' | tr -d "%" | head -n 1)
 if [ -z "$DISK_USAGE" ]; then
