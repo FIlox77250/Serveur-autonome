@@ -3,10 +3,10 @@
 # RECUPERATION DU LOG
 # J'utilise une condition pour vérifier si la variable de Baptiste existe
 # Si elle est vide, j'affiche à l'écran (/dev/stdout)
-if [ -z "$CHEMIN_COMPLET" ]; then
+if [ -z "$FICHIER_LOG" ]; then
     sortie_log="/dev/stdout"
 else
-    sortie_log="$CHEMIN_COMPLET"
+    sortie_log="$FICHIER_LOG"
 fi
 
 # VERIFICATION DISQUE
