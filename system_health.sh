@@ -148,7 +148,7 @@ fonction_sauvegarde() {
 
 afficher_menu() {
     echo "============================================="
-    echo "       SCRIPT UNIFIE - ADMINISTRATION       "
+    echo "       system_health - ADMINISTRATION       "
     echo "============================================="
     echo "1) Vérification système (Disque, RAM, Réseau, Services)"
     echo "2) Analyse de logs"
