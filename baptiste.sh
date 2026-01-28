@@ -1,31 +1,31 @@
 #!/bin/bash
+mkdir -p ./mes_logs
 
-mkdir -p /var/log/maintenance
+DATE=$(date +%d-%m-%Y_%Hh%M)
+FICHIER_LOG="./mes_logs/rapport_$DATE.txt"
 
-NOM_FICHIER=$(date +%Y%m%d).log
-CHEMIN_COMPLET="/var/log/maintenance/$NOM_FICHIER"
+IP_A_CHERCHER="10.0.1.1"
 
-MON_IP="192.168.1.1"
+total=0
+nb_ip=0
 
-COMPTEUR_TOTAL=0
-COMPTEUR_IP=0
+if [ -f "/tmp/analyse.log" ]; then
 
-if [ -f /tmp/analyse.log ]; then
-
-    for LIGNE in $(cat /tmp/analyse.log)
+    while read LIGNE
     do
-        COMPTEUR_TOTAL=$((COMPTEUR_TOTAL + 1))
+        total=$((total + 1))
 
-        if echo "$LIGNE" | grep -q "$MON_IP"; then
-            COMPTEUR_IP=$((COMPTEUR_IP + 1))
+        if echo "$LIGNE" | grep -q "$IP_A_CHERCHER"; then
+            nb_ip=$((nb_ip + 1))
         fi
-    done
+    done < "/tmp/analyse.log"
 
-    echo "Rapport du $(date +%c)" >> "$CHEMIN_COMPLET"
-    echo "Total lignes : $COMPTEUR_TOTAL" >> "$CHEMIN_COMPLET"
-    echo "Lignes avec $MON_IP : $COMPTEUR_IP" >> "$CHEMIN_COMPLET"
+    echo "--- Rapport fait le $(date) ---" > "$FICHIER_LOG"
+    echo "Nombre de lignes lues : $total" >> "$FICHIER_LOG"
+    echo "Lignes contenant $IP_A_CHERCHER : $nb_ip" >> "$FICHIER_LOG"
 
-    echo "Fini ! Les chiffres sont dans $CHEMIN_COMPLET"
+    echo "C'est bon, le rapport est ici : $FICHIER_LOG"
+
 else
-    echo "Problème : le fichier /tmp/analyse.log n'est pas là."
+    echo "Erreur : Je trouve pas le fichier /tmp/analyse.log..."
 fi
